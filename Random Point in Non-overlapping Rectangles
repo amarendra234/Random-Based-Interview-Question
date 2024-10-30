@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>>point;
+    vector<long long>areas;
+    Solution(vector<vector<int>>& rects) {
+        point=rects;
+        for(int i=0;i<rects.size();i++){
+            int x1=rects[i][0];
+            int y1=rects[i][1];
+            int x2=rects[i][2];
+            int y2=rects[i][3];
+            long long int area=(x2-x1+1)*(y2-y1+1);
+            areas.push_back(area);
+        }
+        for(int i=1;i<areas.size();i++){
+            areas[i]+=areas[i-1];
+        }
+    }
+    
+    vector<int> pick() {
+        long long int random_area=rand()%(areas.back());
+        long long int index=lower_bound(areas.begin(),areas.end(),random_area)-areas.begin();
+        long long int x_val=point[index][0]+rand()%(point[index][2]-point[index][0]+1);
+        long long int y_val=point[index][1]+rand()%(point[index][3]-point[index][1]+1);
+        return {(int)x_val,(int)y_val};
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(rects);
+ * vector<int> param_1 = obj->pick();
+ */
