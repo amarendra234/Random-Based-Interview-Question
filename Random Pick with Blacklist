@@ -1,0 +1,44 @@
+class Solution {
+public:
+    unordered_map<int,int>umap;
+    int N;
+    int top;
+    Solution(int n, vector<int>& blacklist) {
+        top=n-blacklist.size();
+        unordered_map<int,int>temp;
+        for(auto nbr:blacklist){
+            temp[nbr]++;
+        }
+        n--;
+        for(int i=0;i<blacklist.size();i++){
+            if(blacklist[i]<top){
+                  while(temp.find(n)!=umap.end()){
+                     n--;
+                  }
+                  umap[blacklist[i]]=n;
+                  n--;
+            }
+        }
+    }
+    // int find_number(){
+    //     int number=rand()%N;
+    //     if(umap.find(number)==umap.end()){
+    //         return number;
+    //     }
+    //     return find_number();
+            
+    // }
+    int pick() {
+        int val=rand()%top;
+        if(umap.find(val)!=umap.end()){
+            return umap[val];
+        }
+        return val;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(n, blacklist);
+ * int param_1 = obj->pick();
+ */
